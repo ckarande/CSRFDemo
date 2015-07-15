@@ -1,0 +1,16 @@
+{
+  "name": "CSRF Demo",
+  "description": "Educational tool to learn about OWASP Top 10 for node.js apps.",
+  "success_url": "/login",
+  "scripts": {
+    "postdeploy": "node artifacts/db-reset.js"
+  },
+  "env": {
+    "NODE_ENV": {
+      "value": "PRODUCTION"
+    }
+  },
+  "addons": [
+    "mongolab:sandbox"
+  ]
+}
