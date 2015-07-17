@@ -17,6 +17,17 @@ function ProfileHandler(db) {
         });
     };
 
+    this.displayPayoutPage = function(req, res, next) {
+        var userId = req.session.userId;
+
+        profile.getByUserId(parseInt(userId), function(err, doc) {
+            if (err) return next(err);
+            doc.userId = userId;
+
+            return res.render("payout", doc);
+        });
+    };
+
     this.handleProfileUpdate = function(req, res, next) {
 
         var firstName = req.body.firstName;

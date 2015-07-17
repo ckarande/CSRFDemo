@@ -28,13 +28,13 @@ MongoClient.connect(config.db, function(err, db) {
     app.use(session({secret: 'sEcur3', saveUninitialized: true, resave: true}));
 
     // Enable Express csrf protection
-    app.use(csrf());
+    //app.use(csrf());
 
     // Make csrf token available to views
-    app.use(function(req, res, next) {
-        res.locals.csrfToken = req.csrfToken();
-        next();
-    });
+    //app.use(function(req, res, next) {
+    //    res.locals.csrfToken = req.csrfToken();
+    //    next();
+    //});
 
     // Application routes
     routes(app, db);

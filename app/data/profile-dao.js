@@ -38,7 +38,6 @@ function ProfileDAO(db) {
             user.dob = dob;
         }
 
-
         users.update({
                 _id: parseInt(userId)
             }, {

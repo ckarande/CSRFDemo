@@ -25,6 +25,9 @@ var exports = function(app, db) {
     // The main page of the app
     app.get("/dashboard", isLoggedIn, sessionHandler.displayWelcomePage);
 
+    // Pension payout page
+    app.get("/payout", isLoggedIn, profileHandler.displayPayoutPage);
+
     // Profile page
     app.get("/profile", isLoggedIn, profileHandler.displayProfile);
     app.post("/profile", isLoggedIn, profileHandler.handleProfileUpdate);
