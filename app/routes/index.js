@@ -1,6 +1,8 @@
 var SessionHandler = require("./session");
 var ProfileHandler = require("./profile");
-var ErrorHandler = require("./error").errorHandler;
+var ErrorHandler = require("./../middleware/error").errorHandler;
+// Middleware to check if a user is logged in
+var isLoggedIn = require("./../middleware/isUserLoggedIn").isUserLoggedIn;
 
 var exports = function(app, db) {
 
@@ -9,8 +11,6 @@ var exports = function(app, db) {
     var sessionHandler = new SessionHandler(db);
     var profileHandler = new ProfileHandler(db);
 
-    // Middleware to check if a user is logged in
-    var isLoggedIn = sessionHandler.isLoggedInMiddleware;
 
    // The main page of the app
     app.get("/", sessionHandler.displayWelcomePage);
@@ -27,6 +27,7 @@ var exports = function(app, db) {
 
     // Pension payout page
     app.get("/payout", isLoggedIn, profileHandler.displayPayoutPage);
+    app.post("/payout", isLoggedIn, profileHandler.handlePayoutUpdate);
 
     // Profile page
     app.get("/profile", isLoggedIn, profileHandler.displayProfile);

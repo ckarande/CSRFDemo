@@ -54,13 +54,46 @@ function ProfileHandler(db) {
                 if (err) return next(err);
 
                 // WARN: Applying any sting specific methods here w/o checking type of inputs could lead to DoS by HPP
-                //firstName = firstName.trim();
                 user.updateSuccess = true;
                 user.userId = userId;
 
                 return res.render("profile", user);
             }
         );
+
+    };
+
+    this.handlePayoutUpdate = function(req, res, next) {
+
+        var bankAcc = req.body.bankAcc;
+        var bankRouting = req.body.bankRouting;
+
+        var userId = req.session.userId;
+        profile.getByUserId(parseInt(userId), function(err, doc) {
+            profile.updateUser(
+                parseInt(userId),
+                doc.firstName,
+                doc.lastName,
+                doc.ssn,
+                doc.dob,
+                doc.address,
+                bankAcc,
+                bankRouting,
+                function(err, user) {
+
+                    if (err) return next(err);
+
+                    user.updateSuccess = true;
+                    user.userId = userId;
+
+                    return res.render("payout", user);
+                }
+            );
+        });
+
+
+
+
 
     };
 
