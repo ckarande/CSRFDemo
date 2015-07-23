@@ -10,6 +10,7 @@ var http = require('http');
 // Application specific modules
 var routes = require('./app/routes');
 var config = require('./config/config');
+var attachCsrfToken =  require('./app/middleware/attachCsrfToken');
 
 MongoClient.connect(config.db, function(err, db) {
 
@@ -30,12 +31,7 @@ MongoClient.connect(config.db, function(err, db) {
 
     // Enable Express csurf protection
     app.use(csurf());
-
-    // Make csrf token available to views
-    app.use(function(req, res, next) {
-        res.locals.csrfToken = req.csrfToken();
-        next();
-    });
+    app.use(attachCsrfToken);
 
     // Application routes
     routes(app, db);
